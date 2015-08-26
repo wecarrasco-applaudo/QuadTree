@@ -261,7 +261,7 @@ public class Ventana extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(CargarImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -304,71 +304,110 @@ public class Ventana extends javax.swing.JFrame {
         Nodo lista[] = new Nodo[4];
         BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
         BufferedImage bf = new BufferedImage(bimage.getWidth(), bimage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        QuadTree qt = new QuadTree();
+        
+        //qt.getPadre().setHeight(bf.getHeight());
+        //qt.getPadre().setWidth(bf.getWidth());
+        //qt.getPadre().height = bf.getHeight();
+        //qt.getPadre().width = bf.getWidth();
+//        System.out.println("bf Width: " + bf.getWidth());
+//        System.out.println("bf Height: " + bf.getHeight());
         for (int i = 0; i < bf.getWidth(); i++) {
             for (int j = 0; j < bf.getHeight(); j++) {
-                System.out.println("Entra a los primeros for");
+//                System.out.println("bf Width: " + bf.getWidth());
+//                System.out.println("bf Height: " + bf.getHeight());
+                // System.out.println("Entra a los primeros for");
                 //VERIFICAR LOS PUNTOS
-                Punto puntos = new Punto(i, j);
-                Nodo v_1 = new Nodo(null, 0, 0, null, null, null, null);
-                Nodo v_2 = new Nodo(null, 0, 0, null, null, null, null);
-                Nodo v_3 = new Nodo(null, 0, 0, null, null, null, null);
-                Nodo v_4 = new Nodo(null, 0, 0, null, null, null, null);
-                
-                Nodo h_1 = new Nodo(puntos, img.getHeight(this) / 2, img.getWidth(this) / 2, v_1, v_2, v_3, v_4);
-                lista[0] = h_1;
-                Nodo h_2 = new Nodo(puntos, img.getHeight(this) / 2, img.getWidth(this) / 2, v_1, v_2, v_3, v_4);
-                lista[1] = h_2;
-                Nodo h_3 = new Nodo(puntos, img.getHeight(this) / 2, img.getWidth(this) / 2, v_1, v_2, v_3, v_4);
-                lista[2] = h_3;
-                Nodo h_4 = new Nodo(puntos, img.getHeight(this) / 2, img.getWidth(this) / 2, v_1, v_2, v_3, v_4);
-                lista[3] = h_4;
-                Nodo padre = new Nodo(puntos, img.getHeight(this), img.getWidth(this), h_1, h_2, h_3, h_4);
+//                Punto puntos = new Punto(i, j);
+//                Nodo v_1 = new Nodo(null, 0, 0, null, null, null, null);
+//                Nodo v_2 = new Nodo(null, 0, 0, null, null, null, null);
+//                Nodo v_3 = new Nodo(null, 0, 0, null, null, null, null);
+//                Nodo v_4 = new Nodo(null, 0, 0, null, null, null, null);
+                Color px1 = null, px2 = null;
+                Nodo temp;
 
-                QuadTree arbol = new QuadTree(padre, lista);
-                System.out.println("Crea el arbol");
+                if (j != bf.getHeight()) {
+                    px1 = new Color(bf.getRGB(i, j));
+                    px2 = new Color(bf.getRGB(i, j + 1));
+                }
 
-                Color color = new Color(255, 255, 255);
-                for (int p = 0; p < lista.length; i++) {
-                    for (int m = 0; m < arbol.getElemento(p).getHeight(); m++) {
-                        for (int n = 0; n < arbol.getElemento(p).getWidth(); n++) {
-                            System.out.println("Entra a los segundos dos fors");
-                            //VALIDAR BIEN LOS VALUE
-                            if (arbol.getElemento(p).getValue() != arbol.getElemento(p).getValue()) {
-                                Nodo padretemp;
-                                padretemp = arbol.getElemento(p);
-                                Nodo htemp_1 = new Nodo(puntos, arbol.getElemento(p).getHeight() / 2, arbol.getElemento(p).getWidth() / 2, v_1, v_2, v_3, v_4);
-                                Nodo htemp_2 = new Nodo(puntos, arbol.getElemento(p).getHeight() / 2, arbol.getElemento(p).getWidth() / 2, v_1, v_2, v_3, v_4);
-                                Nodo htemp_3 = new Nodo(puntos, arbol.getElemento(p).getHeight() / 2, arbol.getElemento(p).getWidth() / 2, v_1, v_2, v_3, v_4);
-                                Nodo htemp_4 = new Nodo(puntos, arbol.getElemento(p).getHeight() / 2, arbol.getElemento(p).getWidth() / 2, v_1, v_2, v_3, v_4);
-                                
-//                                Nodo lista_temp[] = new Nodo[4];
-                                
-                                arbol.getElemento(p).setNe(htemp_1);
-//                                lista_temp[0] = htemp_1;
-                                arbol.getElemento(p).setNw(htemp_2);
-//                                lista_temp[1] = htemp_2;
-                                arbol.getElemento(p).setSe(htemp_3);
-//                                lista_temp[2] = htemp_3;
-                                arbol.getElemento(p).setSw(htemp_4);
-//                                lista_temp[3] = htemp_4;   
-                            }
-                        }
+                if (px1 != px2) {
+                    System.out.println("i: "+i+" Height: "+bf.getHeight());
+                    System.out.println("j: "+j+" Width: "+bf.getWidth());
+                    System.out.println("Pixel 1: "+px1);
+                    System.out.println("Pixel 2: "+px2);
+                    if (((j >= 0) && (j < bf.getWidth() / 2)) && ((i >= 0) && (i < bf.getHeight() / 2))) {
+                        System.out.println("REGION NW");
+                    } else if (((j > bf.getWidth() / 2) && (j <= bf.getWidth())) && ((i >= 0) && (i < bf.getHeight() / 2))) {
+                        System.out.println("REGION NE");
+                    } else if (((j >= 0) && (j < bf.getWidth() / 2)) && ((i > bf.getHeight() / 2) && (i <= bf.getHeight()))) {
+                        System.out.println("REGION SW");
+                    } else if (((j > bf.getWidth() / 2) && (j <= bf.getWidth())) && ((i > bf.getHeight() / 2) && (i <= bf.getHeight()))) {
+                        System.out.println("REGION SE");
                     }
                 }
-
-                if (j == bf.getHeight()/ 2) {
-                    Color color_negro = new Color(0, 0, 0);
-                    bf.setRGB(i, j, color_negro.getRGB());
-                }else if (i == bf.getWidth()/ 2) {
-                    Color color_negro = new Color(0, 0, 0);
-                    bf.setRGB(i, j, color_negro.getRGB());
-                }
-            }
-        }
-
-        c_exportar.setIcon(new ImageIcon(bf));
+//                Nodo h_1 = new Nodo(puntos, img.getHeight(this) / 2, img.getWidth(this) / 2, v_1, v_2, v_3, v_4);
+//                lista[0] = h_1;
+//                Nodo h_2 = new Nodo(puntos, img.getHeight(this) / 2, img.getWidth(this) / 2, v_1, v_2, v_3, v_4);
+//                lista[1] = h_2;
+//                Nodo h_3 = new Nodo(puntos, img.getHeight(this) / 2, img.getWidth(this) / 2, v_1, v_2, v_3, v_4);
+//                lista[2] = h_3;
+//                Nodo h_4 = new Nodo(puntos, img.getHeight(this) / 2, img.getWidth(this) / 2, v_1, v_2, v_3, v_4);
+//                lista[3] = h_4;
+//                Nodo padre = new Nodo(puntos, img.getHeight(this), img.getWidth(this), h_1, h_2, h_3, h_4);
+//
+//                QuadTree arbol = new QuadTree(padre, lista);
+//                System.out.println("Crea el arbol");
+//
+//                Color color = new Color(255, 255, 255);
+//                for (int p = 0; p < lista.length; i++) {
+//                    for (int m = 0; m < arbol.getElemento(p).getHeight(); m++) {
+//                        for (int n = 0; n < arbol.getElemento(p).getWidth(); n++) {
+//
+//                            System.out.println("bf Width: " + bf.getWidth());
+//                            System.out.println("bf Height: " + bf.getHeight());
+//                            System.out.println("lista length: " + lista.length);
+//                            System.out.println("arbol.getElemento(p).getWidth: " + arbol.getElemento(p).getWidth());
+//                            System.out.println("arbol.getElemento(p).getHeight" + arbol.getElemento(p).getHeight());
+//
+//                            //System.out.println("Entra a los segundos dos fors");
+//                            //VALIDAR BIEN LOS VALUE
+//                            if (arbol.getElemento(p).getValue() != arbol.getElemento(p).getValue()) {
+//                                Nodo padretemp;
+//                                padretemp = arbol.getElemento(p);
+//                                Nodo htemp_1 = new Nodo(puntos, arbol.getElemento(p).getHeight() / 2, arbol.getElemento(p).getWidth() / 2, v_1, v_2, v_3, v_4);
+//                                Nodo htemp_2 = new Nodo(puntos, arbol.getElemento(p).getHeight() / 2, arbol.getElemento(p).getWidth() / 2, v_1, v_2, v_3, v_4);
+//                                Nodo htemp_3 = new Nodo(puntos, arbol.getElemento(p).getHeight() / 2, arbol.getElemento(p).getWidth() / 2, v_1, v_2, v_3, v_4);
+//                                Nodo htemp_4 = new Nodo(puntos, arbol.getElemento(p).getHeight() / 2, arbol.getElemento(p).getWidth() / 2, v_1, v_2, v_3, v_4);
+//
+////                                Nodo lista_temp[] = new Nodo[4];
+//                                arbol.getElemento(p).setNe(htemp_1);
+////                                lista_temp[0] = htemp_1;
+//                                arbol.getElemento(p).setNw(htemp_2);
+////                                lista_temp[1] = htemp_2;
+//                                arbol.getElemento(p).setSe(htemp_3);
+////                                lista_temp[2] = htemp_3;
+//                                arbol.getElemento(p).setSw(htemp_4);
+////                                lista_temp[3] = htemp_4;   
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                if (j == bf.getHeight() / 2) {
+//                    Color color_negro = new Color(0, 0, 0);
+//                    bf.setRGB(i, j, color_negro.getRGB());
+//                } else if (i == bf.getWidth() / 2) {
+//                    Color color_negro = new Color(0, 0, 0);
+//                    bf.setRGB(i, j, color_negro.getRGB());
+//                }
+//            }
+//        }
+//
+//        c_exportar.setIcon(new ImageIcon(bf));
     }//GEN-LAST:event_jButton3MouseClicked
-
+        }
+    }
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         Image img = iconToImage(c_imagen.getIcon());
         BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
@@ -384,7 +423,7 @@ public class Ventana extends javax.swing.JFrame {
                 int color = bimage.getRGB(i, j);
                 Color color_obtenido = new Color(color);
                 int rojo = color_obtenido.getRed();
-                System.out.println(rojo);
+                //System.out.println(rojo);
                 int verde = color_obtenido.getGreen();
                 int azul = color_obtenido.getBlue();
                 int gris = (rojo + verde + azul) / 3;
@@ -399,23 +438,23 @@ public class Ventana extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
 //        panel.pack();
 //        panel.setVisible(true);
-      File archivo = null;
-        try{
+        File archivo = null;
+        try {
             archivo = new File("c:\\Archivos\\image.png");
-            
-            if(!archivo.exists()){
-               
+
+            if (!archivo.exists()) {
+
                 FileOutputStream salida = new FileOutputStream(archivo);
-            ObjectOutputStream objecto = new ObjectOutputStream(salida);
-            
-            objecto.writeObject(c_exportar.getIcon());
-            objecto.flush();
-            objecto.close();
-            salida.close();
-            
-            JOptionPane.showMessageDialog(this, "La imagen fue agregada existosamente");
-            
-            }else{
+                ObjectOutputStream objecto = new ObjectOutputStream(salida);
+
+                objecto.writeObject(c_exportar.getIcon());
+                objecto.flush();
+                objecto.close();
+                salida.close();
+
+                JOptionPane.showMessageDialog(this, "La imagen fue agregada existosamente");
+
+            } else {
 //                //Sobreescribir el archivo
 //                FileInputStream entrada = new FileInputStream (archivo);
 //                ObjectInputStream objeto = new ObjectInputStream(entrada);
@@ -448,10 +487,10 @@ public class Ventana extends javax.swing.JFrame {
 //            
             }
 //            
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void panel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel2MouseClicked
@@ -479,8 +518,6 @@ public class Ventana extends javax.swing.JFrame {
             return image;
         }
     }
-    
-    
 
     /**
      * @param args the command line arguments
