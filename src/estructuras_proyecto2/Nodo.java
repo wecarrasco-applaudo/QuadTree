@@ -1,39 +1,32 @@
 package estructuras_proyecto2;
 public class Nodo {
-    public int x;
-    public int y;
+    Punto value;
     public int height;
     public int width;
-    public Nodo next;
-    public Nodo hijo1;
-    public Nodo hijo2;
-    public Nodo hijo3;
-    public Nodo hijo4;
+    public Nodo nw;
+    public Nodo ne;
+    public Nodo sw;
+    public Nodo se;
+
     public Nodo() {
     }
 
-    public Nodo(int x, int y, int height, int width, Nodo next) {
-        this.x = x;
-        this.y = y;
+    public Nodo(Punto value, int height, int width, Nodo nw, Nodo ne, Nodo sw, Nodo se) {
+        this.value = value;
         this.height = height;
         this.width = width;
-        this.next = next;
+        this.nw = nw;
+        this.ne = ne;
+        this.sw = sw;
+        this.se = se;
     }
 
-    public int getX() {
-        return x;
+    public Punto getValue() {
+        return value;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+    public void setValue(Punto value) {
+        this.value = value;
     }
 
     public int getHeight() {
@@ -52,15 +45,35 @@ public class Nodo {
         this.width = width;
     }
 
-    public Nodo getNext() {
-        return next;
+    public Nodo getNw() {
+        return nw;
     }
 
-    public void setNext(Nodo next) {
-        this.next = next;
+    public void setNw(Nodo nw) {
+        this.nw = nw;
     }
-    
-    
-    
-    
+
+    public Nodo getNe() {
+        return ne;
+    }
+
+    public void setNe(Nodo ne) {
+        this.ne = ne;
+    }
+
+    public Nodo getSw() {
+        return sw;
+    }
+
+    public void setSw(Nodo sw) {
+        this.sw = sw;
+    }
+
+    public Nodo getSe() {
+        return se;
+    }
+
+    public void setSe(Nodo se) {
+        this.se = se;
+    }  
 }

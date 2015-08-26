@@ -13,10 +13,17 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.io.EOFException;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -63,6 +70,8 @@ public class Ventana extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         c_imagen = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        b_n = new javax.swing.JLabel();
 
         panel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -138,7 +147,7 @@ public class Ventana extends javax.swing.JFrame {
         });
 
         jButton2.setBackground(new java.awt.Color(204, 204, 204));
-        jButton2.setText("Escala de Grises");
+        jButton2.setText("Convertir a Gris");
         jButton2.setBorder(null);
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -146,7 +155,7 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Exportar Imagen");
+        jButton3.setText("Ver Escala");
         jButton3.setBorder(null);
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -175,37 +184,66 @@ public class Ventana extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Exportar Imagen");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
             }
         });
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        b_n.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(b_n, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(b_n, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(256, 256, 256)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(94, 94, 94)
+                .addGap(86, 86, 86)
                 .addComponent(CargarImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(24, 24, 24))
+                .addGap(92, 92, 92))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(256, 256, 256)
+                        .addComponent(jLabel1)))
+                .addContainerGap(35, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(202, 202, 202))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(262, 262, 262))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,28 +253,29 @@ public class Ventana extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(108, 108, 108)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(97, 97, 97)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CargarImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,14 +299,63 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_CargarImagenMouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        Image img = iconToImage(c_imagen.getIcon());
+        Image img = iconToImage(b_n.getIcon());
+        int contador = 0;
+        Nodo lista[] = new Nodo[4];
         BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
         BufferedImage bf = new BufferedImage(bimage.getWidth(), bimage.getHeight(), BufferedImage.TYPE_INT_ARGB);
         for (int i = 0; i < bf.getWidth(); i++) {
             for (int j = 0; j < bf.getHeight(); j++) {
+                System.out.println("Entra a los primeros for");
+                //VERIFICAR LOS PUNTOS
+                Punto puntos = new Punto(i, j);
+                Nodo v_1 = new Nodo(null, 0, 0, null, null, null, null);
+                Nodo v_2 = new Nodo(null, 0, 0, null, null, null, null);
+                Nodo v_3 = new Nodo(null, 0, 0, null, null, null, null);
+                Nodo v_4 = new Nodo(null, 0, 0, null, null, null, null);
                 
+                Nodo h_1 = new Nodo(puntos, img.getHeight(this) / 2, img.getWidth(this) / 2, v_1, v_2, v_3, v_4);
+                lista[0] = h_1;
+                Nodo h_2 = new Nodo(puntos, img.getHeight(this) / 2, img.getWidth(this) / 2, v_1, v_2, v_3, v_4);
+                lista[1] = h_2;
+                Nodo h_3 = new Nodo(puntos, img.getHeight(this) / 2, img.getWidth(this) / 2, v_1, v_2, v_3, v_4);
+                lista[2] = h_3;
+                Nodo h_4 = new Nodo(puntos, img.getHeight(this) / 2, img.getWidth(this) / 2, v_1, v_2, v_3, v_4);
+                lista[3] = h_4;
+                Nodo padre = new Nodo(puntos, img.getHeight(this), img.getWidth(this), h_1, h_2, h_3, h_4);
+
+                QuadTree arbol = new QuadTree(padre, lista);
+                System.out.println("Crea el arbol");
+
                 Color color = new Color(255, 255, 255);
-                bf.setRGB(i, j, color.getRGB());
+                for (int p = 0; p < lista.length; i++) {
+                    for (int m = 0; m < arbol.getElemento(p).getHeight(); m++) {
+                        for (int n = 0; n < arbol.getElemento(p).getWidth(); n++) {
+                            System.out.println("Entra a los segundos dos fors");
+                            //VALIDAR BIEN LOS VALUE
+                            if (arbol.getElemento(p).getValue() != arbol.getElemento(p).getValue()) {
+                                Nodo padretemp;
+                                padretemp = arbol.getElemento(p);
+                                Nodo htemp_1 = new Nodo(puntos, arbol.getElemento(p).getHeight() / 2, arbol.getElemento(p).getWidth() / 2, v_1, v_2, v_3, v_4);
+                                Nodo htemp_2 = new Nodo(puntos, arbol.getElemento(p).getHeight() / 2, arbol.getElemento(p).getWidth() / 2, v_1, v_2, v_3, v_4);
+                                Nodo htemp_3 = new Nodo(puntos, arbol.getElemento(p).getHeight() / 2, arbol.getElemento(p).getWidth() / 2, v_1, v_2, v_3, v_4);
+                                Nodo htemp_4 = new Nodo(puntos, arbol.getElemento(p).getHeight() / 2, arbol.getElemento(p).getWidth() / 2, v_1, v_2, v_3, v_4);
+                                
+//                                Nodo lista_temp[] = new Nodo[4];
+                                
+                                arbol.getElemento(p).setNe(htemp_1);
+//                                lista_temp[0] = htemp_1;
+                                arbol.getElemento(p).setNw(htemp_2);
+//                                lista_temp[1] = htemp_2;
+                                arbol.getElemento(p).setSe(htemp_3);
+//                                lista_temp[2] = htemp_3;
+                                arbol.getElemento(p).setSw(htemp_4);
+//                                lista_temp[3] = htemp_4;   
+                            }
+                        }
+                    }
+                }
+
                 if (j == bf.getHeight()/ 2) {
                     Color color_negro = new Color(0, 0, 0);
                     bf.setRGB(i, j, color_negro.getRGB());
@@ -305,12 +393,65 @@ public class Ventana extends javax.swing.JFrame {
             }
         }
 
-        c_exportar.setIcon(new ImageIcon(invertido));
+        b_n.setIcon(new ImageIcon(invertido));
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        panel.pack();
-        panel.setVisible(true);
+//        panel.pack();
+//        panel.setVisible(true);
+      File archivo = null;
+        try{
+            archivo = new File("c:\\Archivos\\image.png");
+            
+            if(!archivo.exists()){
+               
+                FileOutputStream salida = new FileOutputStream(archivo);
+            ObjectOutputStream objecto = new ObjectOutputStream(salida);
+            
+            objecto.writeObject(c_exportar.getIcon());
+            objecto.flush();
+            objecto.close();
+            salida.close();
+            
+            JOptionPane.showMessageDialog(this, "La imagen fue agregada existosamente");
+            
+            }else{
+//                //Sobreescribir el archivo
+//                FileInputStream entrada = new FileInputStream (archivo);
+//                ObjectInputStream objeto = new ObjectInputStream(entrada);
+//                ImageIcon temp;
+//                ArrayList<Persona> amigos = new ArrayList<Persona>();
+//                
+//                try{
+//                    while( (temp =(c_exportar.getIcon()) objeto.readObject())!=null){
+//                        amigos.add(temp);
+//                    }
+//                }catch(EOFException e){
+//                    //fin de archivo
+//                }finally{
+//                    entrada.close();
+//                    objeto.close();
+//                }
+//                
+//                amigos.add(p);
+//                
+//                //sobreescribir archivo
+//                
+//                FileOutputStream salida = new FileOutputStream(archivo);
+//                ObjectOutputStream objeto2 = new ObjectOutputStream(salida);
+//                for(Persona per: amigos){
+//                    objeto2.writeObject(per);
+//                }
+//                objeto2.flush();
+//                objeto2.close();
+//                salida.close();
+//            
+            }
+//            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void panel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel2MouseClicked
@@ -338,6 +479,8 @@ public class Ventana extends javax.swing.JFrame {
             return image;
         }
     }
+    
+    
 
     /**
      * @param args the command line arguments
@@ -376,6 +519,7 @@ public class Ventana extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CargarImagen;
+    private javax.swing.JLabel b_n;
     private javax.swing.JLabel c_exportar;
     private javax.swing.JLabel c_imagen;
     private javax.swing.JButton jButton1;
@@ -384,6 +528,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JFrame panel;
     private javax.swing.JPanel panel2;
