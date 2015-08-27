@@ -1,6 +1,5 @@
 package estructuras_proyecto2;
 public class Nodo {
-    Punto value;
     public int height;
     public int width;
     public Nodo nw;
@@ -11,22 +10,13 @@ public class Nodo {
     public Nodo() {
     }
 
-    public Nodo(Punto value, int height, int width, Nodo nw, Nodo ne, Nodo sw, Nodo se) {
-        this.value = value;
+    public Nodo(int height, int width, Nodo nw, Nodo ne, Nodo sw, Nodo se) {
         this.height = height;
         this.width = width;
         this.nw = nw;
         this.ne = ne;
         this.sw = sw;
         this.se = se;
-    }
-
-    public Punto getValue() {
-        return value;
-    }
-
-    public void setValue(Punto value) {
-        this.value = value;
     }
 
     public int getHeight() {
