@@ -6,6 +6,7 @@
 package estructuras_proyecto2;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
@@ -17,9 +18,13 @@ import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -295,7 +300,7 @@ public class Ventana extends javax.swing.JFrame {
         int cantidad = 2;
         BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
         BufferedImage bf = new BufferedImage(bimage.getWidth(), bimage.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        
+
         for (int i = 0; i < bf.getWidth(); i++) {
             for (int j = 0; j < bf.getHeight(); j++) {
                 Color px1 = null, px2 = null;
@@ -306,41 +311,41 @@ public class Ventana extends javax.swing.JFrame {
                 }
 
                 if (px1 != px2) {
-                    System.out.println("i: "+i+" Height: "+bf.getHeight());
-                    System.out.println("j: "+j+" Width: "+bf.getWidth());
-                    System.out.println("Pixel 1: "+px1);
-                    System.out.println("Pixel 2: "+px2);
-                    
-                    Nodo nw = new Nodo(bf.getWidth()/cantidad, bf.getHeight()/cantidad, null, null, null, null);
-                    Nodo ne = new Nodo(bf.getWidth()/cantidad, bf.getHeight()/cantidad, null, null, null, null);
-                    Nodo sw = new Nodo(bf.getWidth()/cantidad, bf.getHeight()/cantidad, null, null, null, null);
-                    Nodo se = new Nodo(bf.getWidth()/cantidad, bf.getHeight()/cantidad, null, null, null, null);
+                    System.out.println("i: " + i + " Height: " + bf.getHeight());
+                    System.out.println("j: " + j + " Width: " + bf.getWidth());
+                    System.out.println("Pixel 1: " + px1);
+                    System.out.println("Pixel 2: " + px2);
+
+                    Nodo nw = new Nodo(bf.getWidth() / cantidad, bf.getHeight() / cantidad, null, null, null, null);
+                    Nodo ne = new Nodo(bf.getWidth() / cantidad, bf.getHeight() / cantidad, null, null, null, null);
+                    Nodo sw = new Nodo(bf.getWidth() / cantidad, bf.getHeight() / cantidad, null, null, null, null);
+                    Nodo se = new Nodo(bf.getWidth() / cantidad, bf.getHeight() / cantidad, null, null, null, null);
                     cantidad = cantidad + 2;
-                    Nodo padre = new Nodo(bf.getWidth(), bf.getHeight(),nw, ne, sw, se);
+                    Nodo padre = new Nodo(bf.getWidth(), bf.getHeight(), nw, ne, sw, se);
                     QuadTree qt = new QuadTree(padre);
-                    
+
                     if (((j >= 0) && (j < bf.getWidth() / 2)) && ((i >= 0) && (i < bf.getHeight() / 2))) {
                         System.out.println("REGION NW");
                         Crear(nw, px1, px2);
                         Imagen(nw, bf);
-                        
+
                     } else if (((j > bf.getWidth() / 2) && (j <= bf.getWidth())) && ((i >= 0) && (i < bf.getHeight() / 2))) {
                         System.out.println("REGION NE");
                         Crear(ne, px1, px2);
                         Imagen(ne, bf);
-                        
+
                     } else if (((j >= 0) && (j < bf.getWidth() / 2)) && ((i > bf.getHeight() / 2) && (i <= bf.getHeight()))) {
                         System.out.println("REGION SW");
                         Crear(sw, px1, px2);
                         Imagen(sw, bf);
-                        
+
                     } else if (((j > bf.getWidth() / 2) && (j <= bf.getWidth())) && ((i > bf.getHeight() / 2) && (i <= bf.getHeight()))) {
                         System.out.println("REGION SE");
                         Crear(se, px1, px2);
                         Imagen(se, bf);
                     }
                 }
-                
+
                 if (j == bf.getHeight() / 2) {
                     Color color_negro = new Color(0, 0, 0);
                     bf.setRGB(i, j, color_negro.getRGB());
@@ -348,8 +353,8 @@ public class Ventana extends javax.swing.JFrame {
                     Color color_negro = new Color(0, 0, 0);
                     bf.setRGB(i, j, color_negro.getRGB());
                 }
-            
-            c_exportar.setIcon(new ImageIcon(bf));
+
+                c_exportar.setIcon(new ImageIcon(bf));
             }
         }
     }//GEN-LAST:event_jButton3MouseClicked
@@ -381,57 +386,79 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        File archivo = null;
+
+        Image img = iconToImage(c_exportar.getIcon());
+        BufferedImage bf = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_RGB);
+        Graphics g = bf.createGraphics();
+        g.drawImage(img, 0, 0, null);
+        g.dispose();
+        File file = new File("theimage.jpg");
         try {
-            archivo = new File("c:\\Archivos\\image.png");
+            //ImageIO.write(null, null, file)
+            ImageIO.write(bf, "jpg", file);
 
-            if (!archivo.exists()) {
-
-                FileOutputStream salida = new FileOutputStream(archivo);
-                ObjectOutputStream objecto = new ObjectOutputStream(salida);
-
-                objecto.writeObject(c_exportar.getIcon());
-                objecto.flush();
-                objecto.close();
-                salida.close();
-
-                JOptionPane.showMessageDialog(this, "La imagen fue agregada existosamente");
-
-            } else {
-//                //Sobreescribir el archivo
-//                FileInputStream entrada = new FileInputStream (archivo);
-//                ObjectInputStream objeto = new ObjectInputStream(entrada);
-//                ImageIcon temp;
-//                ArrayList<Persona> amigos = new ArrayList<Persona>();
-//                
-//                try{
-//                    while( (temp =(c_exportar.getIcon()) objeto.readObject())!=null){
-//                        amigos.add(temp);
-//                    }
-//                }catch(EOFException e){
-//                    //fin de archivo
-//                }finally{
-//                    entrada.close();
-//                    objeto.close();
-//                }
-//                
-//                amigos.add(p);
-//                
-//                //sobreescribir archivo
-//                
+//        int width = img.getWidth(null);
+//
+//        BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_BYTE_ARGB);
+//
+//        Graphics2D g2 = bi.createGraphics();
+//        g2.drawImage(img, 0, 0, null);
+//        g2.dispose();
+//        ImageIO.write(bi, "jpg", new File("img.jpg"));
+//        File archivo = null;
+//        try {
+//            archivo = new File("c:\\Archivos\\image.png");
+//
+//            if (!archivo.exists()) {
+//
 //                FileOutputStream salida = new FileOutputStream(archivo);
-//                ObjectOutputStream objeto2 = new ObjectOutputStream(salida);
-//                for(Persona per: amigos){
-//                    objeto2.writeObject(per);
-//                }
-//                objeto2.flush();
-//                objeto2.close();
+//                ObjectOutputStream objecto = new ObjectOutputStream(salida);
+//
+//                objecto.writeObject(c_exportar.getIcon());
+//                objecto.flush();
+//                objecto.close();
 //                salida.close();
-//            
-            }
-//            
-        } catch (Exception e) {
-            e.printStackTrace();
+//
+//                JOptionPane.showMessageDialog(this, "La imagen fue agregada existosamente");
+//
+//            } else {
+////                //Sobreescribir el archivo
+////                FileInputStream entrada = new FileInputStream (archivo);
+////                ObjectInputStream objeto = new ObjectInputStream(entrada);
+////                ImageIcon temp;
+////                ArrayList<Persona> amigos = new ArrayList<Persona>();
+////                
+////                try{
+////                    while( (temp =(c_exportar.getIcon()) objeto.readObject())!=null){
+////                        amigos.add(temp);
+////                    }
+////                }catch(EOFException e){
+////                    //fin de archivo
+////                }finally{
+////                    entrada.close();
+////                    objeto.close();
+////                }
+////                
+////                amigos.add(p);
+////                
+////                //sobreescribir archivo
+////                
+////                FileOutputStream salida = new FileOutputStream(archivo);
+////                ObjectOutputStream objeto2 = new ObjectOutputStream(salida);
+////                for(Persona per: amigos){
+////                    objeto2.writeObject(per);
+////                }
+////                objeto2.flush();
+////                objeto2.close();
+////                salida.close();
+////            
+//            }
+////            
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        } catch (IOException ex) {
+            Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_jButton1MouseClicked
@@ -461,60 +488,60 @@ public class Ventana extends javax.swing.JFrame {
             return image;
         }
     }
-    
-    void Crear(Nodo nodo, Color pixel1, Color pixel2){
+
+    void Crear(Nodo nodo, Color pixel1, Color pixel2) {
         int cantidad = 2;
         Nodo temp;
         temp = nodo;
-        while(pixel1.getRGB() != pixel2.getRGB()){
-            for(int i = 0; i < temp.getWidth(); i++){
-                for(int j = 0; j< temp.getHeight(); i++){
-                    if(((j >= 0) && (j < temp.getWidth() / cantidad)) && ((i >= 0) && (i < temp.getHeight() / cantidad))){
-                        temp.setNw(new Nodo(temp.getWidth()/cantidad, temp.getHeight()/2, null, null, null, null));
-                        temp.setNe(new Nodo(temp.getWidth()/cantidad, temp.getHeight()/2, null, null, null, null));
-                        temp.setSw(new Nodo(temp.getWidth()/cantidad, temp.getHeight()/2, null, null, null, null));
-                        temp.setSe(new Nodo(temp.getWidth()/cantidad, temp.getHeight()/2, null, null, null, null));
-                        Nodo nuevo = new Nodo(temp.getWidth()/cantidad, temp.getHeight()/cantidad, temp.getNw(), temp.getNe(),
-                                              temp.getSw(), temp.getSe());
+        while (pixel1.getRGB() != pixel2.getRGB()) {
+            for (int i = 0; i < temp.getWidth(); i++) {
+                for (int j = 0; j < temp.getHeight(); i++) {
+                    if (((j >= 0) && (j < temp.getWidth() / cantidad)) && ((i >= 0) && (i < temp.getHeight() / cantidad))) {
+                        temp.setNw(new Nodo(temp.getWidth() / cantidad, temp.getHeight() / 2, null, null, null, null));
+                        temp.setNe(new Nodo(temp.getWidth() / cantidad, temp.getHeight() / 2, null, null, null, null));
+                        temp.setSw(new Nodo(temp.getWidth() / cantidad, temp.getHeight() / 2, null, null, null, null));
+                        temp.setSe(new Nodo(temp.getWidth() / cantidad, temp.getHeight() / 2, null, null, null, null));
+                        Nodo nuevo = new Nodo(temp.getWidth() / cantidad, temp.getHeight() / cantidad, temp.getNw(), temp.getNe(),
+                                temp.getSw(), temp.getSe());
                         temp = nuevo;
                         cantidad = cantidad + 2;
                         System.out.println("Entra");
-                    }else if(((j > temp.getWidth() / cantidad) && (j <= temp.getWidth())) && ((i >= 0) && (i < temp.getHeight() / cantidad))){
-                        temp.setNw(new Nodo(temp.getWidth()/cantidad, temp.getHeight()/2, null, null, null, null));
-                        temp.setNe(new Nodo(temp.getWidth()/cantidad, temp.getHeight()/2, null, null, null, null));
-                        temp.setSw(new Nodo(temp.getWidth()/cantidad, temp.getHeight()/2, null, null, null, null));
-                        temp.setSe(new Nodo(temp.getWidth()/cantidad, temp.getHeight()/2, null, null, null, null));
-                        Nodo nuevo = new Nodo(temp.getWidth()/cantidad, temp.getHeight()/cantidad, temp.getNw(), temp.getNe(),
-                                              temp.getSw(), temp.getSe());
+                    } else if (((j > temp.getWidth() / cantidad) && (j <= temp.getWidth())) && ((i >= 0) && (i < temp.getHeight() / cantidad))) {
+                        temp.setNw(new Nodo(temp.getWidth() / cantidad, temp.getHeight() / 2, null, null, null, null));
+                        temp.setNe(new Nodo(temp.getWidth() / cantidad, temp.getHeight() / 2, null, null, null, null));
+                        temp.setSw(new Nodo(temp.getWidth() / cantidad, temp.getHeight() / 2, null, null, null, null));
+                        temp.setSe(new Nodo(temp.getWidth() / cantidad, temp.getHeight() / 2, null, null, null, null));
+                        Nodo nuevo = new Nodo(temp.getWidth() / cantidad, temp.getHeight() / cantidad, temp.getNw(), temp.getNe(),
+                                temp.getSw(), temp.getSe());
                         temp = nuevo;
                         cantidad = cantidad + 2;
-                         System.out.println("Entra 2");
-                    }else if(((j >= 0) && (j < temp.getWidth() / cantidad)) && ((i > temp.getHeight() / cantidad) && (i <= temp.getHeight()))){
-                        temp.setNw(new Nodo(temp.getWidth()/cantidad, temp.getHeight()/2, null, null, null, null));
-                        temp.setNe(new Nodo(temp.getWidth()/cantidad, temp.getHeight()/2, null, null, null, null));
-                        temp.setSw(new Nodo(temp.getWidth()/cantidad, temp.getHeight()/2, null, null, null, null));
-                        temp.setSe(new Nodo(temp.getWidth()/cantidad, temp.getHeight()/2, null, null, null, null));
-                        Nodo nuevo = new Nodo(temp.getWidth()/cantidad, temp.getHeight()/cantidad, temp.getNw(), temp.getNe(),
-                                              temp.getSw(), temp.getSe());
+                        System.out.println("Entra 2");
+                    } else if (((j >= 0) && (j < temp.getWidth() / cantidad)) && ((i > temp.getHeight() / cantidad) && (i <= temp.getHeight()))) {
+                        temp.setNw(new Nodo(temp.getWidth() / cantidad, temp.getHeight() / 2, null, null, null, null));
+                        temp.setNe(new Nodo(temp.getWidth() / cantidad, temp.getHeight() / 2, null, null, null, null));
+                        temp.setSw(new Nodo(temp.getWidth() / cantidad, temp.getHeight() / 2, null, null, null, null));
+                        temp.setSe(new Nodo(temp.getWidth() / cantidad, temp.getHeight() / 2, null, null, null, null));
+                        Nodo nuevo = new Nodo(temp.getWidth() / cantidad, temp.getHeight() / cantidad, temp.getNw(), temp.getNe(),
+                                temp.getSw(), temp.getSe());
                         temp = nuevo;
                         cantidad = cantidad + 2;
-                         System.out.println("Entra 3");
-                    }else if(((j > temp.getWidth() / 2) && (j <= temp.getWidth())) && ((i > temp.getHeight() / 2) && (i <= temp.getHeight()))){
-                        temp.setNw(new Nodo(temp.getWidth()/cantidad, temp.getHeight()/2, null, null, null, null));
-                        temp.setNe(new Nodo(temp.getWidth()/cantidad, temp.getHeight()/2, null, null, null, null));
-                        temp.setSw(new Nodo(temp.getWidth()/cantidad, temp.getHeight()/2, null, null, null, null));
-                        temp.setSe(new Nodo(temp.getWidth()/cantidad, temp.getHeight()/2, null, null, null, null));
-                        Nodo nuevo = new Nodo(temp.getWidth()/cantidad, temp.getHeight()/cantidad, temp.getNw(), temp.getNe(),
-                                              temp.getSw(), temp.getSe());
+                        System.out.println("Entra 3");
+                    } else if (((j > temp.getWidth() / 2) && (j <= temp.getWidth())) && ((i > temp.getHeight() / 2) && (i <= temp.getHeight()))) {
+                        temp.setNw(new Nodo(temp.getWidth() / cantidad, temp.getHeight() / 2, null, null, null, null));
+                        temp.setNe(new Nodo(temp.getWidth() / cantidad, temp.getHeight() / 2, null, null, null, null));
+                        temp.setSw(new Nodo(temp.getWidth() / cantidad, temp.getHeight() / 2, null, null, null, null));
+                        temp.setSe(new Nodo(temp.getWidth() / cantidad, temp.getHeight() / 2, null, null, null, null));
+                        Nodo nuevo = new Nodo(temp.getWidth() / cantidad, temp.getHeight() / cantidad, temp.getNw(), temp.getNe(),
+                                temp.getSw(), temp.getSe());
                         temp = nuevo;
                         cantidad = cantidad + 2;
-                         System.out.println("Entra 4");
+                        System.out.println("Entra 4");
                     }
                 }
             }
         }
     }
-    
+
     void Imagen(Nodo nodo, BufferedImage bf) {
         int cantidad = 2;
         int c = 1;
@@ -545,10 +572,8 @@ public class Ventana extends javax.swing.JFrame {
                 }
             }
         }
-            c_exportar.setIcon(new ImageIcon(bf));
+        c_exportar.setIcon(new ImageIcon(bf));
     }
-    
-    
 
     /**
      * @param args the command line arguments
@@ -578,13 +603,13 @@ public class Ventana extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        try{
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Ventana().setVisible(true);
-            }
-        });
-        }catch (Exception e) {
+        try {
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    new Ventana().setVisible(true);
+                }
+            });
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
