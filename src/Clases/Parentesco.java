@@ -1,7 +1,8 @@
 package Clases;
 public class Parentesco {
-    int tipo;
-    Artista artista;
+    private int tipo;
+    private Artista artista;
+    
     public Parentesco(int parentesco, Artista artista) {
         this.tipo = parentesco;
         this.artista = artista;

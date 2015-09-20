@@ -1,11 +1,12 @@
 package Clases;
 import java.util.ArrayList;
 public class Artista {
-    String nombre;
-    int edad;
-    String nacionalidad;
-    ArrayList<Pelicula> peliculas;
-    ArrayList<Parentesco> parentescos;
+    private String nombre;
+    private int edad;
+    private String nacionalidad;
+    private ArrayList<Pelicula> peliculas;
+    private ArrayList<Parentesco> parentescos;
+    
     public Artista(String nombre, int edad, String nacionalidad) {
         this.nombre = nombre;
         this.edad = edad;
@@ -34,10 +35,13 @@ public class Artista {
     
     //Parentescos
     public ArrayList<Parentesco> getParentescos() {
-        return parentesco;
+        return parentescos;
     }
     public Parentesco getParentesco(int i){
-        //TODO
+        if(i>=0 && i<parentescos.size()){
+            return parentescos.get(i);
+        }
+        return null;
     }
     public void setParentescos(ArrayList<Parentesco> parentesco) {
         this.parentescos = parentesco;
@@ -45,16 +49,29 @@ public class Artista {
     public void addParentesco(int type, Artista a){
         if(type>=0 && type<=3){
             parentescos.add(new Parentesco(type, a));
+            a.addParentesco2(type, this);
             System.out.println("Parentesco agregado.");
         }else{
             System.out.println("Parentesco no agregado.");
         }
     }
+    public void addParentesco2(int type, Artista a){
+        parentescos.add(new Parentesco(type,a));
+    }
     public void removeParentesco(int i){
-        //TODO
+        if(i>=0 && i<parentescos.size()){
+            parentescos.get(i).getArtista().removeParentesco(this);
+            parentescos.remove(i);
+            System.out.println("Parentesco removido.");
+        }
     }
     public void removeParentesco(Artista a){
-        //TODO
+        for(int i=0; i<parentescos.size(); i++){
+            if(parentescos.get(i).getArtista().equals(a)){
+                parentescos.remove(i);
+                break;
+            }
+        }
     }
     
     //Peliculas
@@ -62,7 +79,10 @@ public class Artista {
         return peliculas;
     }
     public Pelicula getPelicula(int i){
-        //TODO
+        if(i>=0 && i<peliculas.size()){
+            return peliculas.get(i);
+        }
+        return null;
     }
     public void setPeliculas(ArrayList<Pelicula> peliculas) {
         this.peliculas = peliculas;
@@ -72,6 +92,8 @@ public class Artista {
         System.out.println("Pelicula agregada.");
     }
     public void removePelicula(int i){
-        //TODO
+        if(i>=0 && i<peliculas.size()){
+            peliculas.remove(i);
+        }
     }
 }
