@@ -1,81 +1,77 @@
 package Clases;
-
 import java.util.ArrayList;
-import javax.print.event.PrintJobEvent;
-import javax.swing.JOptionPane;
-
 public class Artista {
     String nombre;
     int edad;
     String nacionalidad;
-    ArrayList<Pelicula> peliculas = new ArrayList<>();
-    ArrayList<Parentesco> parentesco = new ArrayList<>();
-
-    public Artista() {
-    }
-
+    ArrayList<Pelicula> peliculas;
+    ArrayList<Parentesco> parentescos;
     public Artista(String nombre, int edad, String nacionalidad) {
         this.nombre = nombre;
         this.edad = edad;
         this.nacionalidad = nacionalidad;
+        peliculas = new ArrayList();
+        parentescos = new ArrayList();
     }
-
     public String getNombre() {
         return nombre;
     }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
     public int getEdad() {
         return edad;
     }
-
     public void setEdad(int edad) {
         this.edad = edad;
     }
-
     public String getNacionalidad() {
         return nacionalidad;
     }
-
     public void setNacionalidad(String nacionalidad) {
         this.nacionalidad = nacionalidad;
     }
-
+    
+    //Parentescos
+    public ArrayList<Parentesco> getParentescos() {
+        return parentesco;
+    }
+    public Parentesco getParentesco(int i){
+        //TODO
+    }
+    public void setParentescos(ArrayList<Parentesco> parentesco) {
+        this.parentescos = parentesco;
+    }
+    public void addParentesco(int type, Artista a){
+        if(type>=0 && type<=3){
+            parentescos.add(new Parentesco(type, a));
+            System.out.println("Parentesco agregado.");
+        }else{
+            System.out.println("Parentesco no agregado.");
+        }
+    }
+    public void removeParentesco(int i){
+        //TODO
+    }
+    public void removeParentesco(Artista a){
+        //TODO
+    }
+    
+    //Peliculas
     public ArrayList<Pelicula> getPeliculas() {
         return peliculas;
     }
-
+    public Pelicula getPelicula(int i){
+        //TODO
+    }
     public void setPeliculas(ArrayList<Pelicula> peliculas) {
         this.peliculas = peliculas;
     }
-
-    public ArrayList<Parentesco> getParentesco() {
-        return parentesco;
-    }
-
-    public void setParentesco(ArrayList<Parentesco> parentesco) {
-        this.parentesco = parentesco;
-    }
-    
     public void addPelicula(Pelicula p){
         peliculas.add(p);
-        JOptionPane.showMessageDialog(null, "Pelicula Agregada");
+        System.out.println("Pelicula agregada.");
     }
-    
-    public void addParentesco(String p, Artista a){
-        if (p.contentEquals("Familia")) {
-            parentesco.add(new Parentesco(1, a));
-        }else if (p.contentEquals("Noviazgo")) {
-            parentesco.add(new Parentesco(2, a));
-        }else if (p.contentEquals("Matrimonio")) {
-            parentesco.add(new Parentesco(3, a));
-        }else if (p.contentEquals("Amistad")) {
-            parentesco.add(new Parentesco(4, a));
-        }
-        
-        JOptionPane.showMessageDialog(null, "Parentesco Agregado");
+    public void removePelicula(int i){
+        //TODO
     }
 }

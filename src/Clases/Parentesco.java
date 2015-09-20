@@ -1,31 +1,21 @@
 package Clases;
 public class Parentesco {
-    int parentesco;
+    int tipo;
     Artista artista;
-
-    public Parentesco() {
-    }
-
     public Parentesco(int parentesco, Artista artista) {
-        this.parentesco = parentesco;
+        this.tipo = parentesco;
         this.artista = artista;
     }
-
-    public int getParentesco() {
-        return parentesco;
+    public int getType() {
+        return tipo;
     }
-
-    public void setParentesco(int parentesco) {
-        this.parentesco = parentesco;
+    public void setType(int type) {
+        tipo = type;
     }
-
     public Artista getArtista() {
         return artista;
     }
-
     public void setArtista(Artista artista) {
         this.artista = artista;
     }
-    
-    
 }

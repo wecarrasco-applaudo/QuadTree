@@ -1,42 +1,29 @@
 package Clases;
-
 public class Pelicula {
     String titulo;
-    String ano;
+    int anno;
     String estudio;
-
-    public Pelicula(String titulo, String ano, String estudio) {
+    public Pelicula(String titulo, int ano, String estudio) {
         this.titulo = titulo;
-        this.ano = ano;
+        anno = ano;
         this.estudio = estudio;
     }
-
-    public Pelicula() {
-    }
-
     public String getTitulo() {
         return titulo;
     }
-
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-
-    public String getAno() {
-        return ano;
+    public int getAnno() {
+        return anno;
     }
-
-    public void setAno(String ano) {
-        this.ano = ano;
+    public void setAnno(int anno) {
+        this.anno = anno;
     }
-
-    public String getEstudio() {
+    public String getStudio() {
         return estudio;
     }
-
-    public void setEstudio(String estudio) {
+    public void setStudio(String estudio) {
         this.estudio = estudio;
     }
-
-
 }
