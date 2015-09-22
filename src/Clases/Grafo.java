@@ -1,5 +1,6 @@
 package Clases;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 public class Grafo {
     private ArrayList<Artista> artistas;
     public Grafo(){
@@ -14,4 +15,12 @@ public class Grafo {
         this.artistas = artistas;
     }
     
+    public void addArtista(Artista a){
+        artistas.add(a);
+        //JOptionPane.showMessageDialog(null, a.getNombre()+" agregado con exito");
+    }
+    
+    public int getCantidadArtistas(){
+        return artistas.size();
+    }
 }

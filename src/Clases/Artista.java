@@ -96,4 +96,9 @@ public class Artista {
             peliculas.remove(i);
         }
     }
+    
+    @Override
+    public String toString(){
+       return nombre; 
+    }
 }

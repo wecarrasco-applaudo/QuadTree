@@ -1,15 +1,27 @@
 package hollywoodgraph;
+
+import Clases.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Random;
+import javax.swing.JOptionPane;
+
 public class gui extends javax.swing.JFrame {
+
     public gui() {
         initComponents();
+        llenarArtistas();
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         FamiliaPrincipal = new javax.swing.JDialog();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        cbArtistasParentesco = new javax.swing.JComboBox();
         arbolFamiliar = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -26,7 +38,7 @@ public class gui extends javax.swing.JFrame {
         jLabel3.setText("Artistas");
         FamiliaPrincipal.getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, -1, -1));
 
-        FamiliaPrincipal.getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 80, 230, -1));
+        FamiliaPrincipal.getContentPane().add(cbArtistasParentesco, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 80, 230, -1));
 
         arbolFamiliar.setBorder(new javax.swing.border.MatteBorder(null));
 
@@ -85,12 +97,17 @@ public class gui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+
+        //llenar combobox
+        cbArtistasParentesco.removeAllItems();
+        for (int i = 0; i < g.getCantidadArtistas(); i++) {
+            cbArtistasParentesco.addItem(g.getArtistas().get(i));
+        }
+
         FamiliaPrincipal.pack();
         FamiliaPrincipal.setModal(true);
+        FamiliaPrincipal.setLocationRelativeTo(null);
         FamiliaPrincipal.setVisible(true);
-        FamiliaPrincipal.setLocationRelativeTo(this);
-        
-        //llenar combobox
     }//GEN-LAST:event_jButton2MouseClicked
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -121,23 +138,53 @@ public class gui extends javax.swing.JFrame {
             public void run() {
                 gui g = new gui();
                 g.setVisible(true);
-                g.setLocationRelativeTo(g);
+                g.setLocationRelativeTo(null);
             }
         });
     }
 
+    public void llenarArtistas() {
+        String[] texto;
+        String aux = "";
+        String[] nacionalidad = {"hondureña", "estadounidense", "mexicano", "ingles", "domincano", "español"};
+
+        try {
+            File file = new File("src/hollywoodgraph/actors.txt");
+            System.out.println(file.getAbsolutePath());
+            if (file != null) {
+                
+                FileReader archivos = new FileReader(file);
+                BufferedReader lee = new BufferedReader(archivos);
+                while ((aux = lee.readLine()) != null) {
+                    texto = aux.split("#");
+                    //System.out.println(texto[1]+" ,");
+                    String na = nacionalidad[0 + r.nextInt(5)];
+                    int edad = 22 + r.nextInt(70);
+                    g.addArtista(new Artista(texto[1], edad, na));
+                }
+                lee.close();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Archivo No Encontrado!");
+        }
+        System.out.println("Cantidad de Artistas: " + g.getCantidadArtistas());
+        //g.setArtistas(artistas);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog FamiliaPrincipal;
     private javax.swing.JPanel arbolFamiliar;
+    private javax.swing.JComboBox cbArtistasParentesco;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
+    ArrayList<Artista> artistas = new ArrayList<>();
+    Random r = new Random();
+    Grafo g = new Grafo();
 }
