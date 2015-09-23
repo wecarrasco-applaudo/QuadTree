@@ -1,13 +1,14 @@
 package Clases;
 public class Pelicula {
     private String titulo;
-    private int anno;
+    private int anno, numero;
     private String estudio;
     
-    public Pelicula(String titulo, int ano, String estudio) {
+    public Pelicula(int numero, String titulo, int ano, String estudio) {
         this.titulo = titulo;
         anno = ano;
         this.estudio = estudio;
+        this.numero = numero;
     }
     public String getTitulo() {
         return titulo;

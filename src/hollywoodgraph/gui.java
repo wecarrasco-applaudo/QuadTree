@@ -28,6 +28,12 @@ public class gui extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        addParentesco = new javax.swing.JDialog();
+        jLabel7 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jLabel8 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox();
+        jLabel6 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -67,6 +73,22 @@ public class gui extends javax.swing.JFrame {
         jLabel5.setText("jLabel5");
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hollywoodgraph/hollywood ancho.jpg"))); // NOI18N
+
+        addParentesco.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel7.setText("Artista:");
+        addParentesco.getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, -1, -1));
+
+        addParentesco.getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 140, -1));
+
+        jLabel8.setText("Parentesco:");
+        addParentesco.getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, -1, -1));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        addParentesco.getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, -1, -1));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hollywoodgraph/hollywood ancho.jpg"))); // NOI18N
+        addParentesco.getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -147,7 +169,22 @@ public class gui extends javax.swing.JFrame {
         String[] texto;
         String aux = "";
         String[] nacionalidad = {"hondureña", "estadounidense", "mexicano", "ingles", "domincano", "español"};
-
+        String[] estudio = {"Columbia", "Paramount", "Pixar", "DreamWorks", "Universal", "THX", "20th Century Fox", "Lucasfilm", "Metro-Goldwyn-Mayer", "Warner Bros.", "Walt Disney Pictures "};
+        try{
+            File file = new File("src/hollywoodgraph/actors.txt");
+            System.out.println(file.getAbsolutePath());
+            if (file != null) {
+                FileReader archivos = new FileReader(file);
+                BufferedReader lee = new BufferedReader(archivos);
+                while ((aux = lee.readLine()) != null) {
+                    texto = aux.split("#");
+                    peliculas.add(new Pelicula(Integer.parseInt(texto[0]), texto[1].substring(0, texto[1].length()-6), Integer.parseInt(texto[1].substring(texto[1].length()-5, texto[1].length()-1)), estudio[0+r.nextInt(11)]));
+                }
+            }
+        }catch(Exception e){
+            
+        }
+        aux = "";
         try {
             File file = new File("src/hollywoodgraph/actors.txt");
             System.out.println(file.getAbsolutePath());
@@ -160,7 +197,10 @@ public class gui extends javax.swing.JFrame {
                     //System.out.println(texto[1]+" ,");
                     String na = nacionalidad[0 + r.nextInt(5)];
                     int edad = 22 + r.nextInt(70);
-                    g.addArtista(new Artista(texto[1], edad, na));
+                    if (!texto[1].contentEquals("Kevin Bacon")) {
+                        g.addArtista(new Artista(Integer.parseInt(texto[0]),texto[1], edad, na));
+                    }
+                    
                 }
                 lee.close();
             }
@@ -168,23 +208,33 @@ public class gui extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Archivo No Encontrado!");
         }
         System.out.println("Cantidad de Artistas: " + g.getCantidadArtistas());
+        
+        //Peliculas
+        
         //g.setArtistas(artistas);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog FamiliaPrincipal;
+    private javax.swing.JDialog addParentesco;
     private javax.swing.JPanel arbolFamiliar;
     private javax.swing.JComboBox cbArtistasParentesco;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     // End of variables declaration//GEN-END:variables
     ArrayList<Artista> artistas = new ArrayList<>();
+    ArrayList<Pelicula> peliculas = new ArrayList<>();
     Random r = new Random();
     Grafo g = new Grafo();
 }

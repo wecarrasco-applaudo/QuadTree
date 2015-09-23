@@ -6,7 +6,7 @@ public class Grafo {
     public Grafo(){
         artistas=new ArrayList();
         //Add Kevin Bacon
-        artistas.add(new Artista("Kevin Bacon", 57, "United States"));
+        artistas.add(new Artista(63,"Kevin Bacon", 57, "United States"));
     }
     public ArrayList<Artista> getArtistas() {
         return artistas;

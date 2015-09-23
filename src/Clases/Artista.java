@@ -2,15 +2,16 @@ package Clases;
 import java.util.ArrayList;
 public class Artista {
     private String nombre;
-    private int edad;
+    private int edad, numero;
     private String nacionalidad;
     private ArrayList<Pelicula> peliculas;
     private ArrayList<Parentesco> parentescos;
     
-    public Artista(String nombre, int edad, String nacionalidad) {
+    public Artista(int numero, String nombre, int edad, String nacionalidad) {
         this.nombre = nombre;
         this.edad = edad;
         this.nacionalidad = nacionalidad;
+        this.numero = numero;
         peliculas = new ArrayList();
         parentescos = new ArrayList();
     }
