@@ -7,7 +7,7 @@ public class Artista {
     private ArrayList<Pelicula> peliculas;
     private ArrayList<Parentesco> parentescos;
     
-    public Artista(int numero, String nombre, int edad, String nacionalidad) {
+    public Artista(String nombre, int edad, String nacionalidad) {
         this.nombre = nombre;
         this.edad = edad;
         this.nacionalidad = nacionalidad;
@@ -47,17 +47,18 @@ public class Artista {
     public void setParentescos(ArrayList<Parentesco> parentesco) {
         this.parentescos = parentesco;
     }
-    public void addParentesco(int type, Artista a){
+    public void addParentesco(int type, Artista a, Artista b){
         if(type>=0 && type<=3){
-            parentescos.add(new Parentesco(type, a));
-            a.addParentesco2(type, this);
+            parentescos.add(new Parentesco(type, a, b));
+            parentescos.add(new Parentesco(type, b, a));
+            
             System.out.println("Parentesco agregado.");
         }else{
             System.out.println("Parentesco no agregado.");
         }
     }
-    public void addParentesco2(int type, Artista a){
-        parentescos.add(new Parentesco(type,a));
+    public void addParentesco2(int type, Artista a, Artista b){
+        parentescos.add(new Parentesco(type, a, b));
     }
     public void removeParentesco(int i){
         if(i>=0 && i<parentescos.size()){

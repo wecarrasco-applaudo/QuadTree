@@ -3,7 +3,7 @@ public class Parentesco {
     private int tipo;
     private Artista artista;
     
-    public Parentesco(int parentesco, Artista artista) {
+    public Parentesco(int parentesco, Artista artistaOrigen, Artista artistaDestino) {
         this.tipo = parentesco;
         this.artista = artista;
     }
